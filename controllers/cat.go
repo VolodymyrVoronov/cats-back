@@ -110,3 +110,40 @@ func DeleteCatByID(w http.ResponseWriter, r *http.Request) {
 
 	w.WriteHeader(http.StatusOK)
 }
+
+func UpdateCatByID(w http.ResponseWriter, r *http.Request) {
+	id := chi.URLParam(r, "id")
+	pClient := database.PClient
+
+	var catResponse db.CatModel
+
+	err := json.NewDecoder(r.Body).Decode(&catResponse)
+	if err != nil {
+		w.WriteHeader(http.StatusBadRequest)
+		w.Write([]byte(err.Error()))
+		fmt.Println("Error decoding JSON")
+		return
+	}
+
+	_, err = pClient.Client.Cat.FindUnique(db.Cat.ID.Equals(id)).Update(
+		db.Cat.Name.Set(catResponse.Name),
+		db.Cat.Age.Set(catResponse.Age),
+		db.Cat.Breed.Set(catResponse.Breed),
+		db.Cat.Photo.Set(catResponse.Photo),
+		db.Cat.Diseases.Set(catResponse.Diseases),
+		db.Cat.Information.Set(catResponse.Information),
+		db.Cat.Insurance.Set(catResponse.Insurance),
+		db.Cat.Alive.Set(catResponse.Alive),
+		db.Cat.Dead.Set(catResponse.Dead),
+		db.Cat.Marked.Set(catResponse.Marked),
+	).Exec(pClient.Context)
+
+	if err != nil {
+		w.WriteHeader(http.StatusInternalServerError)
+		w.Write([]byte(err.Error()))
+		fmt.Println("Error updating cat")
+		return
+	}
+
+	w.WriteHeader(http.StatusOK)
+}

@@ -26,7 +26,8 @@ func Routes() http.Handler {
 	router.Get("/api/cats", controllers.GetAllCats)
 	router.Get("/api/cats/{id}", controllers.GetCatByID)
 	router.Post("/api/cat", controllers.CreateCat)
-	router.Delete("/api/cat/{id}", controllers.DeleteCatByID)
+	router.Delete("/api/cats/{id}", controllers.DeleteCatByID)
+	router.Put("/api/cats/{id}", controllers.UpdateCatByID)
 
 	return router
 }
