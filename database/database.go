@@ -16,10 +16,8 @@ var PClient = &PrismaDB{}
 func ConnectDB() (*PrismaDB, error) {
 	client := db.NewClient()
 
-	if err := client.Connect(); err != nil {
-		{
-			return nil, err
-		}
+	if err := client.Prisma.Connect(); err != nil {
+		return nil, err
 	}
 
 	PClient.Client = client

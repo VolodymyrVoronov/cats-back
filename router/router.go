@@ -3,6 +3,7 @@ package router
 import (
 	"net/http"
 
+	"github.com/VolodymyrVoronov/cats-back/controllers"
 	"github.com/go-chi/chi"
 	"github.com/go-chi/chi/middleware"
 	"github.com/go-chi/cors"
@@ -22,11 +23,10 @@ func Routes() http.Handler {
 		MaxAge:           300,
 	}))
 
-	router.Route("/api", func(r chi.Router) {
-		r.Get("/", func(w http.ResponseWriter, r *http.Request) {
-			w.Write([]byte("Hello World!"))
-		})
-	})
+	router.Get("/api/cats", controllers.GetAllCats)
+	router.Get("/api/cats/{id}", controllers.GetCatByID)
+	router.Post("/api/cat", controllers.CreateCat)
+	router.Delete("/api/cat/{id}", controllers.DeleteCatByID)
 
 	return router
 }

@@ -25,7 +25,7 @@ func (app *Application) Serve() error {
 
 	fmt.Printf("Listening on port %d\n", port)
 
-	srv := http.Server{
+	srv := &http.Server{
 		Addr:    fmt.Sprintf(":%d", port),
 		Handler: router.Routes(),
 	}
