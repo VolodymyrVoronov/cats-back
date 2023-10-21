@@ -11,6 +11,34 @@ import (
 	"github.com/go-chi/chi"
 )
 
+var ErrorWritingJSON = "Error writing JSON"
+var ErrorGettingAllCats = "Error getting all cats"
+var ErrorGettingCatByID = "Error getting cat by id"
+var ErrorCreatingCat = "Error creating cat"
+var ErrorDeletingCatByID = "Error deleting cat by id"
+var ErrorUpdatingCatByID = "Error updating cat by id"
+var ErrorDecodingJSON = "Error decoding JSON"
+
+type Errors struct {
+	ErrorWritingJSON     string
+	ErrorGettingAllCats  string
+	ErrorGettingCatByID  string
+	ErrorCreatingCat     string
+	ErrorDeletingCatByID string
+	ErrorUpdatingCatByID string
+	ErrorDecodingJSON    string
+}
+
+var E = Errors{
+	ErrorWritingJSON:     ErrorWritingJSON,
+	ErrorGettingAllCats:  ErrorGettingAllCats,
+	ErrorGettingCatByID:  ErrorGettingCatByID,
+	ErrorCreatingCat:     ErrorCreatingCat,
+	ErrorDeletingCatByID: ErrorDeletingCatByID,
+	ErrorUpdatingCatByID: ErrorUpdatingCatByID,
+	ErrorDecodingJSON:    ErrorDecodingJSON,
+}
+
 func GetAllCats(w http.ResponseWriter, r *http.Request) {
 	pClient := database.PClient
 
@@ -18,7 +46,7 @@ func GetAllCats(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		w.WriteHeader(http.StatusInternalServerError)
 		w.Write([]byte(err.Error()))
-		fmt.Println("Error getting all cats")
+		fmt.Println(E.ErrorGettingAllCats)
 		return
 	}
 
@@ -29,7 +57,7 @@ func GetAllCats(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		w.WriteHeader(http.StatusInternalServerError)
 		w.Write([]byte(err.Error()))
-		fmt.Println("Error writing JSON")
+		fmt.Println(ErrorWritingJSON)
 		return
 	}
 }
@@ -42,7 +70,7 @@ func GetCatByID(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		w.WriteHeader(http.StatusInternalServerError)
 		w.Write([]byte(err.Error()))
-		fmt.Println("Error getting cat by id")
+		fmt.Println(E.ErrorGettingCatByID)
 		return
 	}
 
@@ -50,7 +78,7 @@ func GetCatByID(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		w.WriteHeader(http.StatusInternalServerError)
 		w.Write([]byte(err.Error()))
-		fmt.Println("Error writing JSON")
+		fmt.Println(ErrorWritingJSON)
 		return
 	}
 }
@@ -62,7 +90,7 @@ func CreateCat(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		w.WriteHeader(http.StatusBadRequest)
 		w.Write([]byte(err.Error()))
-		fmt.Println("Error decoding JSON")
+		fmt.Println(E.ErrorDecodingJSON)
 		return
 	}
 
@@ -83,7 +111,7 @@ func CreateCat(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		w.WriteHeader(http.StatusInternalServerError)
 		w.Write([]byte(err.Error()))
-		fmt.Println("Error creating cat")
+		fmt.Println(E.ErrorCreatingCat)
 		return
 	}
 
@@ -91,7 +119,7 @@ func CreateCat(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		w.WriteHeader(http.StatusInternalServerError)
 		w.Write([]byte(err.Error()))
-		fmt.Println("Error writing JSON")
+		fmt.Println(ErrorWritingJSON)
 		return
 	}
 }
@@ -104,7 +132,7 @@ func DeleteCatByID(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		w.WriteHeader(http.StatusInternalServerError)
 		w.Write([]byte(err.Error()))
-		fmt.Println("Error deleting cat")
+		fmt.Println(E.ErrorDeletingCatByID)
 		return
 	}
 
@@ -121,7 +149,7 @@ func UpdateCatByID(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		w.WriteHeader(http.StatusBadRequest)
 		w.Write([]byte(err.Error()))
-		fmt.Println("Error decoding JSON")
+		fmt.Println(E.ErrorDecodingJSON)
 		return
 	}
 
@@ -141,7 +169,7 @@ func UpdateCatByID(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		w.WriteHeader(http.StatusInternalServerError)
 		w.Write([]byte(err.Error()))
-		fmt.Println("Error updating cat")
+		fmt.Println(E.ErrorUpdatingCatByID)
 		return
 	}
 
